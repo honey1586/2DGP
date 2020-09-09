@@ -1,0 +1,202 @@
+깃 허브란 분산 버전 관리 툴인 깃(Git)을 사용하는 프로젝트를 지원하는 웹호스팅 서비스이다. 쉽게 말해, 코드를 저장소에 올려 협업을 원하는 팀원들과 코드를 공유할 수 있는 시스템이다. 소셜 네트워크와 비슷하다. 깃 허브의 특징으로는 첫번째로, 저장소에 초대할 수 있는 팀원은 무제한이다. 두번째로, 개인 저장소(공개가 되지 않는 저장소)는 유료이다. 마지막으로 Pull->Pull Request 형식이라 오픈소스 코드가 발전하는데 영향을 미친다. 그리고 원본 소스코드에 branch를 만들어 원본 소스코드는 훼손하지 않고 같은 코드로 작업을 할 수도 있다. 
+
+깃 기본 용어
+커맨드 라인(Command Line) : 깃 명령어를 입력할 때 사용하는 컴퓨터 프로그램, 텍스트 기반 명령어 입력.
+저장소(Repository) : 프로젝트가 저장될 수 있는 디렉토리나 저장공간.
+커밋(Commit) : 깃에 파워를 주는 명령이다. 커밋하면, 그 시점 저장소의 "스냅샷"을 찍어, 프로젝트를 이전의 어떠한 상태로든 재평가하거나 복원할 수 있는 체크포인트를 가질 수 있다.
+브랜치(Branch) : 여러 명이 하나의 프로젝트에서 깃 없이 작업하는 것은 혼란스러울 수 있기 때문에 메인 프로젝트의 브랜치를 따와서 자신이 작업해도 원본이 훼손되는 것을 방지할 수 있다. 원본 프로젝트는 "master"라는 용어를 쓴다.
+
+주요 명령어
+git init : 깃 저장소를 초기화한다.
+git config : "configure"의 준말, 처음에 깃을 설정할 때 가장 유용하다.
+git help : 21개의 가장 많이 사용하는 깃 명령어들이 나타난다.
+git status : 저장소 상태를 체크한다.
+git add : 저장소에 새 파일을 추가하는 것이 아닌, 깃의 저장소 "스냅샷"에 추가된다.
+git branch : 여러 협업자와 작업하고 싶을 때 입력하면 새로운 브랜치를 만든다.
+git merge : 브랜치에서 작업을 끝내고, 모든 협업자가 볼 수 있는 master 브랜치로 병합할 수 있다.
+git push : 로컬 컴퓨터에서 작업하고 커밋을 깃허브에서 온라인으로도 볼 수 있도록 변경사항을 깃허브에 "push" 한다.(업데이트)
+git pull : 로컬 컴퓨터에서 작업할 때, 작업하고 있는 저장소의 최신 버전(다른 사람이 작업하고 push한 작업물)을 자신의 컴퓨터에 받아올 때 pull 하는 명령어이다.
+
+Python 3.8.2 (tags/v3.8.2:7b3ab59, Feb 25 2020, 22:45:29) [MSC v.1916 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license()" for more information.
+>>> 9+10
+19
+>>> 100-1
+99
+>>> 7*52
+364
+>>> 1024/8
+128.0
+>>> 1024//8
+128
+>>> 2**2
+4
+>>> 4//3
+1
+>>> 1//2
+0
+>>> 7%3
+1
+>>> 7.5%3
+1.5
+>>> 4%2.1
+1.9
+>>> 4/2.1
+1.9047619047619047
+>>> 4//2.1
+1.0
+>>> pi = 3.141592
+>>> r = 3
+>>> pi * r ** 2
+28.274328
+>>> pi *r*r
+28.274328000000004
+>>> print(pi)
+3.141592
+>>> name1 = "Trump"
+>>> name2 = "강다니엘"
+>>> print(name1)
+Trump
+>>> print(name2)
+강다니엘
+>>> first = "Daehyun"
+>>> last = "Lee"
+>>> name = first + " " + last
+>>> name
+'Daehyun Lee'
+>>> print(name)
+Daehyun Lee
+>>> name * 2
+'Daehyun LeeDaehyun Lee'
+>>> name * 3
+'Daehyun LeeDaehyun LeeDaehyun Lee'
+>>> name[0]
+'D'
+>>> name[2]
+'e'
+>>> name[-1]
+'e'
+>>> 4>3
+True
+>>> 3.5 < -1.3
+False
+>>> 10 >= 10
+True
+>>> a = 365 > 366
+>>> print(a)
+False
+>>> type(a)
+<class 'bool'>
+>>> twice = ['momo','sana','zwi','nayun','dahyun']
+>>> black_pink = ['jisu','jeni','rose','risa']
+>>> twice
+['momo', 'sana', 'zwi', 'nayun', 'dahyun']
+>>> twice
+['momo', 'sana', 'zwi', 'nayun', 'dahyun']
+>>> twice.append("jihyo")
+>>> twitce
+Traceback (most recent call last):
+  File "<pyshell#11>", line 1, in <module>
+    twitce
+NameError: name 'twitce' is not defined
+>>> twice
+['momo', 'sana', 'zwi', 'nayun', 'dahyun', 'jihyo']
+>>> len(twice)
+6
+>>> unite = twice + black_pink
+>>> unite
+['momo', 'sana', 'zwi', 'nayun', 'dahyun', 'jihyo', 'jisu', 'jeni', 'rose', 'risa']
+>>> unite.remove('momo')
+>>> unite
+['sana', 'zwi', 'nayun', 'dahyun', 'jihyo', 'jisu', 'jeni', 'rose', 'risa']
+>>> unite[0]
+'sana'
+>>> unite[-1]
+'risa'
+>>> unite[:3]
+['sana', 'zwi', 'nayun']
+>>> unite[-3:]
+['jeni', 'rose', 'risa']
+>>> score = {'momo' :80 , 'zwi' : 85 , 'sana' : 98}
+>>> type(score)
+<class 'dict'>
+>>> score['momo']
+80
+>>> score['nayun']
+Traceback (most recent call last):
+  File "<pyshell#3>", line 1, in <module>
+    score['nayun']
+KeyError: 'nayun'
+>>> score['nayun'] = 100
+>>> score
+{'momo': 80, 'zwi': 85, 'sana': 98, 'nayun': 100}
+>>> del score['momo']
+>>> score
+{'zwi': 85, 'sana': 98, 'nayun': 100}
+>>> score.keys()
+dict_keys(['zwi', 'sana', 'nayun'])
+>>> score.values()
+dict_values([85, 98, 100])
+>>> 'zwi' in score
+True
+>>> 'momo' in score
+False
+>>> score.clear()
+>>> score
+{}
+>>> t1 = (1,2,3)
+>>> t2 = (1, )
+>>> t3 = ()
+>>> t4 = 1,2,3,4
+>>> t4
+(1, 2, 3, 4)
+>>> type(t4)
+<class 'tuple'>
+>>> t5 = (1,'a',"park",(1,2))
+>>> t1[1:]
+(2, 3)
+>>> t1 + t5
+(1, 2, 3, 1, 'a', 'park', (1, 2))
+>>> t4 * t4
+Traceback (most recent call last):
+  File "<pyshell#23>", line 1, in <module>
+    t4 * t4
+TypeError: can't multiply sequence by non-int of type 'tuple'
+>>> t4 * 2
+(1, 2, 3, 4, 1, 2, 3, 4)
+>>> s1= {1,2,3}
+>>> type(s1)
+<class 'set'>
+>>> s1 = {1,2,2,4}
+>>> s1
+{1, 2, 4}
+>>> l1 = [1,2,2,2,2,3,3,3,3,5,5,5,5]
+>>> s1 = set(l1)
+>>> s1
+{1, 2, 3, 5}
+>>> s2 = {3,5,6,7}
+>>> s1
+{1, 2, 3, 5}
+>>> s1+s2
+Traceback (most recent call last):
+  File "<pyshell#34>", line 1, in <module>
+    s1+s2
+TypeError: unsupported operand type(s) for +: 'set' and 'set'
+>>> s1 | s2
+{1, 2, 3, 5, 6, 7}
+>>> s1 & s2
+{3, 5}
+>>> s2 - s1
+{6, 7}
+>>> s1 - s2
+{1, 2}
+>>> s1.add(8)
+>>> s1
+{1, 2, 3, 5, 8}
+>>> s2.remove(6)
+>>> s2
+{3, 5, 7}
+
+느낀 점 : C나 C++을 사용했을 때보다 간편하다는 느낌을 많이 받았다. 어떤 면에서 그런 느낌을 받았는지 살펴보며 코드를 예제
+코드를 입력해 보았는데 우선 변수 선언에서 매우 간단하게 느껴졌고, 가장 크게 느낌을 받은 것은 문자열 다루는 것에서 느꼈다.
+파이썬은 문자열을 다루는데 C나 C++보다 간단한 것 같다.
