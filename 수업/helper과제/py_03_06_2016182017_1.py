@@ -1,10 +1,11 @@
 from helper import *
 from pico2d import *
+import random
 
 # Boy와 관련된 것들을 클래스에 넣어서 관리하면 유지보수가 쉬워진다.
 class Boy:
     def __init__(self):
-        self.x , self.y = get_canvas_width() // 2,80
+        self.x,self.y = get_canvas_width() // 2,80
         self.image = load_image('../res/run_animation.png')
         self.dx = 0
         self.dy = 0
@@ -18,6 +19,7 @@ class Boy:
         self.y += self.dy * 5
         self.frame = (self.frame + 1) % 8
 
+
 class Grass:
     def __init__(self):
         self.x, self.y = 400,30
@@ -26,13 +28,15 @@ class Grass:
         self.image.draw(self.x,self.y)
 
 def handle_events():
-    global running , dx,dy,x,y  #전역으로 바꿔준다.
+    global running
     evts = get_events()
     for e in evts:
         if e.type == SDL_QUIT:
             running = False
         elif e.type == SDL_MOUSEBUTTONDOWN:
-            move_toward((x,y),delta((x,y),(e.x,e.y),1)
+            set_target(boy, (e.x, e.y))
+
+
 
 
         #elif e.type == SDL_MOUSEMOTION:
@@ -43,6 +47,8 @@ open_canvas()
 boy = Boy()
 grass = Grass()
 
+
+
 running = True
 while running:
     clear_canvas()
@@ -51,10 +57,14 @@ while running:
     boy.draw()
 
 
+
     update_canvas()
     handle_events()
 
+    move_toward_obj(boy)
+
     boy.update()
+
 
     delay(0.01)
 

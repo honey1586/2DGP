@@ -1,4 +1,4 @@
-import gobj
+from gobj import *
 
 def handle_events():
     global running , dx ,x,y  #전역으로 바꿔준다.
