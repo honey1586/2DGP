@@ -49,4 +49,3 @@ def move_toward_obj(obj):
 def set_target(obj, target):
     obj.target = target
     obj.delta = 0,0 if target is None else delta(obj.pos, target, obj.speed)
-
