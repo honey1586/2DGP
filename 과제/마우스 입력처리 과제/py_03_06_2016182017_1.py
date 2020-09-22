@@ -30,9 +30,6 @@ class Boy:
             else:
                 self.rTarget = self.targetList[0]
 
-
-
-
 class Grass:
     def __init__(self):
         self.x, self.y = 400,30
@@ -73,7 +70,6 @@ while running:
     handle_events()
 
     boy.update()
-
 
     delay(0.01)
 

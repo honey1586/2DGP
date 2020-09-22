@@ -1,13 +1,15 @@
 from pico2d import *
-import random
+from random import *
+
+
 
 class Boy:
     def __init__(self):
-        self.x = random.random(100,600)
-        self.y = random.random(100,600)
+        self.x = randint(100,600)
+        self.y = randint(100,600)
         self.image = load_image('../res/run_animation.png')
-        self.dx = random.random()
-        self.frame = random.random(0,7)
+        self.dx = random()
+        self.frame = randint(0,7)
 
     def draw(self):
         self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
