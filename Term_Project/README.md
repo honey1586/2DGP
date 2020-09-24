@@ -15,7 +15,7 @@
 >
 > <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/title_screenshot.png?raw=true" alt="title" style="zoom:80%;" />  <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/ingame_screenshot.jpg?raw=true" alt="ingame" style="zoom: 80%;" />
 >
-> <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/%EC%BA%90%EB%A6%AD%ED%84%B0%EC%84%A0%ED%83%9D%EC%B0%BD.JPG?raw=true" style="zoom:80%;" /> <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/%ED%98%88%EC%82%AC%ED%8F%AC.jpg?raw=true" style="zoom:150%;" />
+> <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/%EC%BA%90%EB%A6%AD%ED%84%B0%EC%84%A0%ED%83%9D%EC%B0%BD.JPG?raw=true" style="zoom:80%;" /> <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/bress.jpg?raw=true" style="zoom:82%;" />
 >
 > [^인-게임 스크린샷]:  메탈슬러그3 타이틀, 인-게임 , 캐릭터 선택창
 >
@@ -47,7 +47,7 @@
 
 ### 3. GameState 설명
 
-> ![](https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.JPG?raw=true) 
+> ![](https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/2dgp%20termproject%20diagram.png?raw=true) 
 >
 > ​                                                 **< State 구조 다이어그램 >**
 >
