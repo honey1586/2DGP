@@ -1,2 +1,2 @@
-# 2DGP
-2020년 2학기 2DGP
+# Term Project
+
