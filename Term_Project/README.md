@@ -15,7 +15,7 @@
 >
 > <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/title_screenshot.png?raw=true" alt="title" style="zoom:80%;" />  <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/ingame_screenshot.jpg?raw=true" alt="ingame" style="zoom: 80%;" />
 >
-> <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/%EC%BA%90%EB%A6%AD%ED%84%B0%EC%84%A0%ED%83%9D%EC%B0%BD.JPG?raw=true" style="zoom:80%;" /> <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/%ED%98%88%EC%82%AC%ED%8F%AC.jpg?raw=true" style="zoom:300%;" />
+> <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/%EC%BA%90%EB%A6%AD%ED%84%B0%EC%84%A0%ED%83%9D%EC%B0%BD.JPG?raw=true" style="zoom:80%;" /> <img src="https://github.com/honey1586/2DGP/blob/master/Term_Project/Images/%ED%98%88%EC%82%AC%ED%8F%AC.jpg?raw=true" style="zoom:150%;" />
 >
 > [^인-게임 스크린샷]:  메탈슬러그3 타이틀, 인-게임 , 캐릭터 선택창
 >
