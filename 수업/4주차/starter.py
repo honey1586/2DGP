@@ -1,4 +1,4 @@
 import gfw
-import logo_state
+import title_state
 
-gfw.run(logo_state)
+gfw.run(title_state)
