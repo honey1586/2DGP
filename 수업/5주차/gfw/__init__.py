@@ -1,6 +1,10 @@
-# version 2020-0921
+# version 2020-0927
 import time
 from pico2d import *
+import random
+import gfw.world
+import gfw.image
+import gfw.font
 
 running = True
 stack = None
@@ -17,7 +21,7 @@ def run(start_state):
     stack = [start_state]
 
     w,h = 800,600
-    if hasattr(start_state, 'canvas_width'): w = start_state.canvas_width  #동사의 3인칭 단수형으로 시작하면 BOOL을 반환하는 함수다.
+    if hasattr(start_state, 'canvas_width'): w = start_state.canvas_width
     if hasattr(start_state, 'canvas_height'): h = start_state.canvas_height
 
     open_canvas(w=w, h=h)

@@ -1,44 +1,57 @@
-import random
 import gfw
-import gfw_world
 from pico2d import *
 from player import Player
 from bullet import LaserBullet
-from enemy import Enemy
+from score import Score
+import gobj
+import enemy_gen
+import life_gauge
 
 canvas_width = 500
 canvas_height = 800
 
 def enter():
-    gfw_world.init(['bg', 'enemy', 'bullet', 'player'])
+    gfw.world.init(['bg', 'enemy', 'bullet', 'player', 'ui'])
     global player
     player = Player()
-    gfw_world.add(gfw.layer.player, player)
+    gfw.world.add(gfw.layer.player, player)
 
-    set_next_enemy_gen_time()
+    global score
+    score = Score(canvas_width - 20, canvas_height - 50)
+    gfw.world.add(gfw.layer.ui, score)
 
+    global font
+    font = gfw.font.load(gobj.RES_DIR + '/segoeprb.ttf', 40)
 
-def set_next_enemy_gen_time():
-    global enemy_gen_time
-    enemy_gen_time = random.uniform(1, 2)
+    life_gauge.load()
 
-def generate_enemy_if_timed_out():
-    global enemy_gen_time
-    enemy_gen_time -= gfw.delta_time
-    if enemy_gen_time > 0: return
+def check_enemy(e):
+    if gobj.collides_box(player, e):
+        print('Player Collision', e)
+        e.remove()
+        return
 
-    x = random.randint(0, get_canvas_width())
-    e = Enemy(x, -1)
-    gfw_world.add(gfw.layer.enemy, e)
-    # print('\t\tenemies = ', len(Enemy.enemies))
-    set_next_enemy_gen_time()
+    for b in gfw.gfw.world.objects_at(gfw.layer.bullet):
+        if gobj.collides_box(b, e):
+            # print('Collision', e, b)
+            dead = e.decrease_life(b.power)
+            if dead:
+                score.score += e.level * 10
+                e.remove()
+            b.remove()
+            return
 
 def update():
-    gfw_world.update()
-    generate_enemy_if_timed_out()
+    gfw.world.update()
+    enemy_gen.update()
+
+    for e in gfw.world.objects_at(gfw.layer.enemy):
+        check_enemy(e)
 
 def draw():
-    gfw_world.draw()
+    gfw.world.draw()
+    # gobj.draw_collision_box()
+    font.draw(20, canvas_height - 45, 'Wave: %d' % enemy_gen.wave_index)
 
 def handle_event(e):
     global player
