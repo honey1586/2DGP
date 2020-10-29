@@ -6,7 +6,7 @@ def enter():
     global image , ch_image , idx
     image = load_image('res/SelectionWindow.png')
     ch_image = load_image('res/Select_Character1.png')
-    idx = 0
+    idx = 1
 
 
 def update():
@@ -16,7 +16,7 @@ def update():
 def draw():
     global idx
     image.draw(400, 300)
-    ch_image.clip_draw(0,-100,167,320,132,246)
+    ch_image.clip_draw((167*idx),0,167,320,123,246)
 
 
 
@@ -27,6 +27,8 @@ def handle_event(e):
     elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
         gfw.quit()
     elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_LEFT):
+        idx = 1
+    elif (e.type,e.key) == (SDL_KEYDOWN, 'k'):
         idx = 2
 
 
