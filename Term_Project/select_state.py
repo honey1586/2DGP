@@ -2,11 +2,24 @@ import gfw
 from pico2d import *
 import gfw_image
 
+
 def enter():
-    global image , ch_image , idx
+    global image ,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick , pickX , pickY
+    idx1 = 1
+    idx2 = 0
+    idx3 = 0
+    idx4 = 0
+    cursorPos = 0
+    pick = False
+    pickX = 0
+    pickY = 570
     image = load_image('res/SelectionWindow.png')
-    ch_image = load_image('res/Select_Character1.png')
-    idx = 1
+    cursor_image = load_image('res/SelectScene_Cursor.png')
+    pick_image = load_image('res/CharacterPick.png')
+    ch1_image = load_image('res/Select_Character1.png')
+    ch2_image = load_image('res/Select_Character2.png')
+    ch3_image = load_image('res/Select_Character3.png')
+    ch4_image = load_image('res/Select_Character4.png')
 
 
 def update():
@@ -14,22 +27,74 @@ def update():
 
 
 def draw():
-    global idx
+    global idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick ,  pickX , pickY
+
+    ch1_image.clip_draw((168 * idx1), 0, 166, 320, 121, 246)
+    ch2_image.clip_draw((167 * idx2), 0, 166, 320, 301, 246)
+    ch3_image.clip_draw((167 * idx3), 0, 166, 320, 480, 246)
+    ch4_image.clip_draw((167 * idx4), 0, 166, 320, 658, 246)
+
+    if pick == True:
+
+        if pickY >= 247: #247
+            pickY -= 6
+
+        if pickY <= 526:
+            pick_image.clip_draw(0, 0, 173, 326, pickX, pickY)
+
     image.draw(400, 300)
-    ch_image.clip_draw((167*idx),0,167,320,123,246)
+    cursor_image.draw(122 + (178 * cursorPos), 448)
 
-
+    if cursorPos == 0:
+        idx1 = 1
+        idx2 = 0
+        idx3 = 0
+        idx4 = 0
+    elif cursorPos == 1:
+        idx1 = 0
+        idx2 = 1
+        idx3 = 0
+        idx4 = 0
+    elif cursorPos == 2:
+        idx1 = 0
+        idx2 = 0
+        idx3 = 1
+        idx4 = 0
+    elif cursorPos == 3:
+        idx1 = 0
+        idx2 = 0
+        idx3 = 0
+        idx4 = 1
 
 def handle_event(e):
-    global idx
+    global idx1,idx2,idx3,idx4 , cursorPos , pick_image , pick ,  pickX , pickY
     if e.type == SDL_QUIT:
         gfw.quit()
     elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
         gfw.quit()
     elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_LEFT):
-        idx = 1
-    elif (e.type,e.key) == (SDL_KEYDOWN, 'k'):
-        idx = 2
+        if cursorPos > 0:
+            cursorPos -= 1
+    elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_RIGHT):
+        if cursorPos < 3:
+            cursorPos += 1
+
+    if (e.type, e.key) == (SDL_KEYDOWN, SDLK_a):
+        if cursorPos == 0:
+            pick = True
+            pickX = 120
+
+        elif cursorPos == 1:
+            pick = True
+            pickX = 300
+
+        elif cursorPos == 2:
+            pick = True
+            pickX = 480
+
+        elif cursorPos == 3:
+            pick = True
+            pickX = 660
 
 
 
