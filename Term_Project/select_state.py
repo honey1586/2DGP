@@ -4,7 +4,7 @@ import gfw_image
 
 
 def enter():
-    global image ,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick , pickX , pickY
+    global character1,character2,character3,character4,image ,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick , pickX , pickY
     idx1 = 1
     idx2 = 0
     idx3 = 0
@@ -22,25 +22,43 @@ def enter():
     ch4_image = load_image('res/Select_Character4.png')
 
 
+    character1 = load_image('res/Character1.png')
+    character2 = load_image('res/Character2.png')
+    character3 = load_image('res/Character3.png')
+    character4 = load_image('res/Character4.png')
+
+
 def update():
     pass
 
 
 def draw():
-    global idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick ,  pickX , pickY
+    global character1,character2 ,character3,character4,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick ,  pickX , pickY
 
-    ch1_image.clip_draw((168 * idx1), 0, 166, 320, 121, 246)
+    ch1_image.clip_draw((167 * idx1), 0, 166, 320, 121, 246)
     ch2_image.clip_draw((167 * idx2), 0, 166, 320, 301, 246)
     ch3_image.clip_draw((167 * idx3), 0, 166, 320, 480, 246)
     ch4_image.clip_draw((167 * idx4), 0, 166, 320, 658, 246)
 
     if pick == True:
-
         if pickY >= 247: #247
             pickY -= 6
 
         if pickY <= 526:
             pick_image.clip_draw(0, 0, 173, 326, pickX, pickY)
+
+        if pickY <= 247 and cursorPos == 0:
+            character1.draw(126, 215)
+        elif pickY <= 247 and cursorPos == 1:
+            character2.draw(306,215)
+        elif pickY <= 247 and cursorPos == 2:
+            character3.draw(486,215)
+        elif pickY <= 247 and cursorPos == 3:
+            character4.draw(666,215)
+
+
+
+
 
     image.draw(400, 300)
     cursor_image.draw(122 + (178 * cursorPos), 448)
@@ -67,7 +85,8 @@ def draw():
         idx4 = 1
 
 def handle_event(e):
-    global idx1,idx2,idx3,idx4 , cursorPos , pick_image , pick ,  pickX , pickY
+    global idx1,idx2,idx3,idx4 , cursorPos , pick_image , pick ,  pickX , pickY , ch_pick
+
     if e.type == SDL_QUIT:
         gfw.quit()
     elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
@@ -95,6 +114,7 @@ def handle_event(e):
         elif cursorPos == 3:
             pick = True
             pickX = 660
+
 
 
 
