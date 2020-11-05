@@ -29,9 +29,10 @@ def enter():
 
 
 def update():
-    global loading
+    global loading,cursorPos
     if loading == True:
         sleep(1)
+        game_state.num = cursorPos + 1
         gfw.change(game_state)
 
 

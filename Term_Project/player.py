@@ -1,8 +1,6 @@
-import random
 from pico2d import *
 import gfw
-
-RES_DIR = 'res/'
+from gobj import *
 
 class Player:
     KEY_MAP = {
@@ -19,32 +17,22 @@ class Player:
     image = None
 
     #constructor
-    def __init__(self):
-        self.delta = 0, 0
+    def __init__(self,num):
         self.fidx = 0
-        self.action = 0
-        self.pos = 100,100
-        Player.image = gfw.image.load(RES_DIR + '/Character1.png')
-
-
+        Player.image = load_image('res/Character'+str(num)+'_Idle.png')
 
     def draw(self):
         sx = self.fidx * 70
-        sy = self.action * 70
-        self.image.clip_draw(sx, sy, 100, 100, *self.pos)
+        self.image.clip_draw(sx, 0, 68, 81, 50,50)
 
     def update(self):
-        self.fidx = (self.fidx + 1) % 8
+        self.fidx = (self.fidx + 1) % 4
+
+
+
 
     def fire(self):
         pass
-
-    def updateDelta(self, ddx, ddy):
-        pass
-
-    def updateAction(self, dx, ddx):
-        pass
-
 
     def handle_event(self, e):
         pass
