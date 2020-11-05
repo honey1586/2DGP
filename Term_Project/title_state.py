@@ -1,11 +1,11 @@
 import gfw
 from pico2d import *
-import gfw
 import select_state
 
 def enter():
     global image
     image = load_image('res/title.jpg')
+
 
 
 def update():
@@ -15,7 +15,6 @@ def update():
 def draw():
     image.draw(400, 300)
 
-
 def handle_event(e):
     if e.type == SDL_QUIT:
         gfw.quit()
@@ -24,20 +23,16 @@ def handle_event(e):
     elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_SPACE):
         gfw.change(select_state)
 
-
-
 def exit():
     global image
     del image
-
+    print("del image")
 
 def pause():
     pass
 
-
 def resume():
     pass
-
 
 if __name__ == '__main__':
     gfw.run_main()

@@ -1,20 +1,24 @@
 import gfw
 from pico2d import *
 from background import *
-import gobj
-
-
-canvas_width = 800
-canvas_height = 600
+from player import Player
 
 def enter():
-    pass
+    gfw.world.init(['bg','player'])
+
+    bg = Background('title.jpg')
+    gfw.world.add(gfw.layer.bg,bg)
+
+    global player
+    player = Player()
+
+    gfw.world.add(gfw.layer.player, player)
 
 def update():
-    pass
+    gfw.world.update()
 
 def draw():
-    pass
+    gfw.world.draw()
 
 def handle_event(e):
     # prev_dx = boy.dx
