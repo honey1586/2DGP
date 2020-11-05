@@ -1,10 +1,12 @@
 import gfw
 from pico2d import *
 import gfw_image
+import game_state
+from time import *
 
 
 def enter():
-    global character1,character2,character3,character4,image ,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick , pickX , pickY
+    global elapsed , character1,character2,character3,character4,image ,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick , pickX , pickY
     idx1 = 1
     idx2 = 0
     idx3 = 0
@@ -13,6 +15,7 @@ def enter():
     pick = False
     pickX = 0
     pickY = 570
+    elapsed = 0
     image = load_image('res/SelectionWindow.png')
     cursor_image = load_image('res/SelectScene_Cursor.png')
     pick_image = load_image('res/CharacterPick.png')
@@ -33,7 +36,7 @@ def update():
 
 
 def draw():
-    global character1,character2 ,character3,character4,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick ,  pickX , pickY
+    global elapsed , character1,character2 ,character3,character4,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick ,  pickX , pickY
 
     ch1_image.clip_draw((167 * idx1), 0, 166, 320, 121, 246)
     ch2_image.clip_draw((167 * idx2), 0, 166, 320, 301, 246)
@@ -49,14 +52,16 @@ def draw():
 
         if pickY <= 247 and cursorPos == 0:
             character1.draw(126, 215)
+
         elif pickY <= 247 and cursorPos == 1:
             character2.draw(306,215)
+
         elif pickY <= 247 and cursorPos == 2:
             character3.draw(486,215)
+
+
         elif pickY <= 247 and cursorPos == 3:
             character4.draw(666,215)
-
-
 
 
 
@@ -114,6 +119,7 @@ def handle_event(e):
         elif cursorPos == 3:
             pick = True
             pickX = 660
+
 
 
 
