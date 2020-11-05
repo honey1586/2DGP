@@ -7,7 +7,6 @@ num = 0
 
 def enter():
     gfw.world.init(['player'])
-    print(num)
 
     global player
     player = Player(num)
@@ -27,6 +26,8 @@ def handle_event(e):
     elif e.type == SDL_KEYDOWN:
         if e.key == SDLK_ESCAPE:
             gfw.pop()
+
+    player.handle_event(e)
 
 def exit():
     pass
