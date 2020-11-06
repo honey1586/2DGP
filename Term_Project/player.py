@@ -13,51 +13,82 @@ class Player:
         (SDL_KEYUP, SDLK_DOWN):    ( 0,  0),
         (SDL_KEYUP, SDLK_UP):      ( 0, 0),
     }
-    KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
-    image = None
+    SP_KEY_MAP = {
+        (SDL_KEYDOWN, SDLK_a): ('fire', 0),
+        (SDL_KEYUP, SDLK_a): ('fire', 0),
+    }
+
+    Leg_image = None
+    Body_image = None
 
     #constructor
     def __init__(self,num):
-        self.pos = 50,50
+        self.legposX , self.legposY = 45,50
+        self.bodyposX , self.bodyposY = 50,70
         self.fidx = 0
         self.delta = 0, 0
-        self.action = 3
-        self.time =0
-        Player.image = load_image('res/Character4_Idle.png')
+        self.leg_action = 3
+        self.body_action = 3
+        self.time = 0
+        self.ocha = 0
+
+
+        Player.Leg_image = load_image('res/leg_idle.png')
+        Player.Body_image = load_image('res/body_idle.png')
 
     def draw(self):
-        sx = self.fidx * 71
-        sy = self.action * 82
-        self.image.clip_draw(sx, sy, 71, 82, *self.pos)
+        leg_sx = self.fidx * 150
+        leg_sy = self.leg_action * 150
+        body_sx = self.fidx * 150
+        body_sy = self.body_action * 150
+        self.Leg_image.clip_draw(leg_sx, leg_sy, 150, 150, self.legposX + self.ocha , self.legposY,300,300)
+        self.Body_image.clip_draw(body_sx, body_sy, 150, 150, self.bodyposX,self.bodyposY,300,300)
 
 
     def update(self):
-        x, y = self.pos
+        legx, legy = self.legposX,self.legposY
+        bodyx,bodyy = self.bodyposX, self.bodyposY
         dx, dy = self.delta
-        self.pos = x + dx, y + dy
+        self.legposX , self.legposY = legx + dx, legy + dy
+        self.bodyposX , self.bodyposY = bodyx + dx, bodyy + dy
+
         self.time += gfw.delta_time
         frame = self.time * 10
         self.fidx = int(frame) % 10
 
-
-    def updateDelta(self, ddx, ddy):
+    def updateDelta(self, ddx, ddy , motion , zzz):
         dx,dy = self.delta
         dx += ddx
         dy += ddy
         if ddx != 0:
-            self.updateAction(dx, ddx)
+            self.updateAction(dx, ddx , motion , zzz)
         self.delta = dx, dy
 
-    def updateAction(self, dx, ddx):
-        self.action = \
-            0 if dx < 0 else \
-            1 if dx > 0 else \
-            2 if ddx > 0 else 3
+    def updateAction(self, dx, ddx , motion , zzz):
+        if dx < 0 : # 왼쪽 걷기
+            self.leg_action = 0
+
+            self.ocha = 10
+            if motion == 'fire':
+                self.body_action = 0
+            else:
+                self.body_action = 2
+
+        elif dx > 0: # 오른쪽 걷기
+            self.leg_action = 1
+            self.body_action = 3
+            self.ocha = 0
+
+        elif ddx > 0: # 왼쪽 기본 ( 바라보기 )
+            self.leg_action = 2
+        elif ddx < 0: # 오른쪽 기본 ( 바라보기 )
+            self.leg_action = 3
 
     def fire(self):
         pass
 
+
     def handle_event(self, e):
         pair = (e.type, e.key)
-        if pair in Player.KEY_MAP:
-            self.updateDelta(*Player.KEY_MAP[pair])
+        if pair in Player.KEY_MAP or pair in Player.SP_KEY_MAP:
+            self.updateDelta(*Player.KEY_MAP[pair],*Player.SP_KEY_MAP[pair])
