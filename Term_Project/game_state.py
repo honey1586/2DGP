@@ -2,7 +2,7 @@ import gfw
 from pico2d import *
 import background as bg
 from player import Player
-
+from bullet import Bullet
 
 def enter():
     gfw.world.init(['bg','player'])
@@ -18,9 +18,11 @@ def enter():
 
 def update():
     gfw.world.update()
+    for b in Bullet.bullets: b.update()
 
 def draw():
     gfw.world.draw()
+    for b in Bullet.bullets: b.draw()
 
 def handle_event(e):
     # prev_dx = boy.dx

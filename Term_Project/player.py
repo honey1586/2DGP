@@ -1,24 +1,27 @@
 from pico2d import *
 import gfw
+from bullet import Bullet
 
 px = 0
 
 class Player:
+
     body_image = None
     leg_image = None
-    BODY_RIGHT_IDLE_ACTION = 3
-    BODY_LEFT_IDLE_ACTION = 2
-    BODY_RIGHT_SHOOT_ACTION = 1
-    BODY_LEFT_SHOOT_ACTION = 0
+
+    BODY_RIGHT_IDLE_ACTION = 4
+    BODY_LEFT_IDLE_ACTION = 3
+    BODY_RIGHT_SHOOT_ACTION = 2
+    BODY_LEFT_SHOOT_ACTION = 1
 
     LEG_RIGHT_IDLE_ACTION = 3
     LEG_LEFT_IDLE_ACTION = 2
-    LEG_RIGHT_WALK_ACTION = 1
+    LEG_RIGHT_WALK_ACTION =1
     LEG_LEFT_WALK_ACTION = 0
 
     #constructor
     def __init__(self):
-        self.x,self.y = 50,120
+        self.x,self.y = 50,125
         self.dx,self.dy = 0,0
 
         self.body_fidx = 0
@@ -30,6 +33,7 @@ class Player:
         self.fireaction = False
         self.isLeftWalking = False
         self.isRightWalking = False
+        self.isJump = False
 
         self.body_action = Player.BODY_RIGHT_IDLE_ACTION
         self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
@@ -68,9 +72,15 @@ class Player:
             self.leg_action = Player.LEG_LEFT_WALK_ACTION
             self.ocha = 10
 
+        if self.isJump == True:
+            if self.y <= 213:
+                self.y += 4
+            if self.y > 213:
+                self.isJump = False
+        if self.isJump == False and self.y > 125:
+            self.y -= 4
+
         px += self.dx
-
-
 
     def calframe(self):
         self.time += gfw.delta_time
@@ -86,15 +96,13 @@ class Player:
     def moving(self):
         self.x = self.x + self.dx
 
-    # 점프
-    def tryjump(self):
-        self.jump()
-
     def jump(self):
-        pass
+        self.isJump = True
+
 
     def fire(self):
-        pass
+        bullet = Bullet(self.x,self.y,self.leg_action)
+        Bullet.bullets.append(bullet)
 
     def tryfire(self):
         self.fire()
@@ -118,6 +126,10 @@ class Player:
             if e.key == SDLK_a:
                 self.temp = self.body_action
                 self.tryfire()
+
+            if e.key == SDLK_s:
+                self.jump()
+
 
         if e.type == SDL_KEYUP:
             if e.key == SDLK_LEFT:
