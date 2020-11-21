@@ -23,6 +23,11 @@ class Player:
         self.leg_fidx = 0
         self.ocha = 0
         self.framespeed = 0
+        self.temp = 0
+
+        self.fireaction = False
+        self.isLeftWalking = False
+        self.isRightWalking = False
 
         self.body_action = Player.BODY_RIGHT_IDLE_ACTION
         self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
@@ -46,11 +51,32 @@ class Player:
         self.calframe()
         self.moving()
 
+        if self.dx > 0:
+            self.body_action = Player.BODY_RIGHT_IDLE_ACTION
+            if self.fireaction == True:
+                self.body_action = Player.BODY_RIGHT_SHOOT_ACTION
+            self.leg_action = Player.LEG_RIGHT_WALK_ACTION
+            self.ocha = 0
+
+        if self.dx < 0:
+            self.body_action = Player.BODY_LEFT_IDLE_ACTION
+            if self.fireaction == True:
+                self.body_action = Player.BODY_LEFT_SHOOT_ACTION
+            self.leg_action = Player.LEG_LEFT_WALK_ACTION
+            self.ocha = 10
+
+
+
     def calframe(self):
         self.time += gfw.delta_time
-        frame = self.time * 10 * self.framespeed
+        frame = self.time * 10
         self.leg_fidx = int(frame) % 10
-        self.body_fidx = int(frame) % 10
+        if self.fireaction == False:
+            self.body_fidx = int(frame) % 10
+
+        if self.fireaction == True:
+            self.body_fidx = 5
+
     # 움직임
     def moving(self):
         self.x = self.x + self.dx
@@ -65,20 +91,28 @@ class Player:
     def fire(self):
         pass
 
+    def tryfire(self):
+        self.fire()
+        self.fireaction = True
+
+        if self.leg_action == Player.LEG_LEFT_IDLE_ACTION:
+            self.body_action = Player.BODY_LEFT_SHOOT_ACTION
+
+        elif self.isRightWalking == True or self.leg_action == Player.LEG_RIGHT_IDLE_ACTION:
+            self.body_action = Player.BODY_RIGHT_SHOOT_ACTION
+
+
+
     def handle_event(self, e):
         if e.type == SDL_KEYDOWN:
             if e.key == SDLK_LEFT:
                 self.dx -= 2
-                self.body_action = Player.BODY_LEFT_IDLE_ACTION
-                self.leg_action = Player.LEG_LEFT_WALK_ACTION
-                self.ocha = 10
+
             if e.key == SDLK_RIGHT:
                 self.dx += 2
-                self.body_action = Player.BODY_RIGHT_IDLE_ACTION
-                self.leg_action = Player.LEG_RIGHT_WALK_ACTION
-                self.ocha = 0
-
-            if e.key == SDLK_s:
+            if e.key == SDLK_a:
+                self.temp = self.body_action
+                self.tryfire()
 
         if e.type == SDL_KEYUP:
             if e.key == SDLK_LEFT:
@@ -87,6 +121,11 @@ class Player:
             if e.key == SDLK_RIGHT:
                 self.dx -= 2
                 self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
+
+            if e.key == SDLK_a:
+                self.fireaction = False
+                self.body_action = self.temp
+
 
 
 
