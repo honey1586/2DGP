@@ -1,6 +1,8 @@
 from pico2d import *
 import gfw
 
+px = 0
+
 class Player:
     body_image = None
     leg_image = None
@@ -48,6 +50,7 @@ class Player:
         self.body_image.clip_draw(body_sx,body_sy,150,150,self.x,self.y,350,350)
 
     def update(self):
+        global px
         self.calframe()
         self.moving()
 
@@ -64,6 +67,8 @@ class Player:
                 self.body_action = Player.BODY_LEFT_SHOOT_ACTION
             self.leg_action = Player.LEG_LEFT_WALK_ACTION
             self.ocha = 10
+
+        px += self.dx
 
 
 
@@ -106,20 +111,20 @@ class Player:
     def handle_event(self, e):
         if e.type == SDL_KEYDOWN:
             if e.key == SDLK_LEFT:
-                self.dx -= 2
+                self.dx -= 1
 
             if e.key == SDLK_RIGHT:
-                self.dx += 2
+                self.dx += 1
             if e.key == SDLK_a:
                 self.temp = self.body_action
                 self.tryfire()
 
         if e.type == SDL_KEYUP:
             if e.key == SDLK_LEFT:
-                self.dx += 2
+                self.dx += 1
                 self.leg_action = Player.LEG_LEFT_IDLE_ACTION
             if e.key == SDLK_RIGHT:
-                self.dx -= 2
+                self.dx -= 1
                 self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
 
             if e.key == SDLK_a:

@@ -1,15 +1,20 @@
 import gfw
 from pico2d import *
-from background import *
+import background as bg
 from player import Player
 
+
 def enter():
-    gfw.world.init(['player'])
+    gfw.world.init(['bg','player'])
 
     global player
     player = Player()
-
     gfw.world.add(gfw.layer.player, player)
+
+    global bg
+    bg.init()
+    gfw.world.add(gfw.layer.bg,bg)
+
 
 def update():
     gfw.world.update()
