@@ -1,11 +1,10 @@
 import gfw
 from pico2d import *
-from gobj import *
 
 class Background:
     def __init__(self, imageName):
         self.imageName = imageName
-        self.image = gfw.image.load(res(imageName))
+        self.image = gfw.image.load('res/bg.png')
         self.target = None
         self.cw, self.ch = get_canvas_width(), get_canvas_height()
         self.win_rect = 0, 0, self.cw, self.ch
@@ -123,7 +122,7 @@ class InfiniteBackground(Background):
 class HorzScrollBackground:
     def __init__(self, imageName):
         self.imageName = imageName
-        self.image = gfw.image.load(res(imageName))
+        self.image = gfw.image.load('res/bg.png')
         self.cw, self.ch = get_canvas_width(), get_canvas_height()
         self.scroll = 0
         self.speed = 0
@@ -172,7 +171,7 @@ class HorzScrollBackground:
 class VertScrollBackground:
     def __init__(self, imageName):
         self.imageName = imageName
-        self.image = gfw.image.load(res(imageName))
+        self.image = gfw.image.load('res/bg.png')
         self.cw, self.ch = get_canvas_width(), get_canvas_height()
         self.scroll = 0
         self.speed = 0

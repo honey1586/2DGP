@@ -122,15 +122,8 @@ def handle_event(e):
             pick = True
             pickX = 660
 
-
-
-
-
 def exit():
-    global loading,character1,character2,character3,character4,bg ,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick , pickX , pickY
-    del loading,character1,character2,character3,character4,bg ,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick , pickX , pickY
-    print("del select_state")
-
+    pass
 
 def pause():
     pass

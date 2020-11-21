@@ -3,13 +3,11 @@ from pico2d import *
 from background import *
 from player import Player
 
-num = 0
-
 def enter():
     gfw.world.init(['player'])
 
     global player
-    player = Player(num)
+    player = Player()
 
     gfw.world.add(gfw.layer.player, player)
 

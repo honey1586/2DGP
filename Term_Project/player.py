@@ -1,113 +1,95 @@
 from pico2d import *
 import gfw
-from gobj import *
-
 
 class Player:
-    KEY_MAP = {
-        (SDL_KEYDOWN, SDLK_LEFT):  (-2,  0 , 0),
-        (SDL_KEYDOWN, SDLK_RIGHT): ( 2,  0 , 0),
-        (SDL_KEYDOWN, SDLK_DOWN):  ( 0, 0 , 0),
-        (SDL_KEYDOWN, SDLK_UP):    ( 0,  0, 0),
-        (SDL_KEYUP, SDLK_LEFT):    ( 2,  0, 0),
-        (SDL_KEYUP, SDLK_RIGHT):   (-2,  0, 0),
-        (SDL_KEYUP, SDLK_DOWN):    ( 0,  0, 0),
-        (SDL_KEYUP, SDLK_UP):      ( 0, 0, 0),
-        (SDL_KEYDOWN, SDLK_a):     (0,0, 1),
-        (SDL_KEYUP,SDLK_a):        (0,0,-1),
-    }
+    body_image = None
+    leg_image = None
+    BODY_RIGHT_IDLE_ACTION = 3
+    BODY_LEFT_IDLE_ACTION = 2
+    BODY_RIGHT_SHOOT_ACTION = 1
+    BODY_LEFT_SHOOT_ACTION = 0
 
-    Leg_image = None
-    Body_image = None
+    LEG_RIGHT_IDLE_ACTION = 3
+    LEG_LEFT_IDLE_ACTION = 2
+    LEG_RIGHT_WALK_ACTION = 1
+    LEG_LEFT_WALK_ACTION = 0
 
     #constructor
-    def __init__(self,num):
-        self.legposX , self.legposY = 47,50
-        self.bodyposX , self.bodyposY = 50,80
-        self.fidx = 0
-        self.delta = 0, 0
-        self.leg_action = 3
-        self.body_action = 3
-        self.time = 0
-        self.ocha = 0
-        self.IDLE_STATE = True
-        self.WALK_STATE = False
-        self.JUMPING_STATE = False
-        self.DOWN_STATE = False
+    def __init__(self):
+        self.x,self.y = 50,120
+        self.dx,self.dy = 0,0
 
-        Player.Leg_image = load_image('res/leg_idle.png')
-        Player.Body_image = load_image('res/body_idle.png')
+        self.body_fidx = 0
+        self.leg_fidx = 0
+        self.ocha = 0
+        self.framespeed = 0
+
+        self.body_action = Player.BODY_RIGHT_IDLE_ACTION
+        self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
+
+        self.time = 0
+
+        Player.body_image = gfw.load_image('res/body_idle.png')
+        Player.leg_image = gfw.load_image('res/leg_idle.png')
+
 
     def draw(self):
-        leg_sx = self.fidx * 150
+        leg_sx = self.leg_fidx * 150
         leg_sy = self.leg_action * 150
-        body_sx = self.fidx * 150
-        body_sy = self.body_action * 150
-        self.Leg_image.clip_draw(leg_sx, leg_sy, 150, 150, self.legposX + self.ocha , self.legposY,400,400)
-        self.Body_image.clip_draw(body_sx, body_sy, 150, 150, self.bodyposX,self.bodyposY,400,400)
+        self.leg_image.clip_draw(leg_sx, leg_sy, 150, 150, self.x - 5 + self.ocha, self.y - 28, 350, 350)
 
+        body_sx = self.body_fidx * 150
+        body_sy = self.body_action * 150
+        self.body_image.clip_draw(body_sx,body_sy,150,150,self.x,self.y,350,350)
 
     def update(self):
-        legx, legy = self.legposX,self.legposY
-        bodyx,bodyy = self.bodyposX, self.bodyposY
-        dx, dy = self.delta
-        self.legposX , self.legposY = legx + dx, legy + dy
-        self.bodyposX , self.bodyposY = bodyx + dx, bodyy + dy
+        self.calframe()
+        self.moving()
 
+    def calframe(self):
         self.time += gfw.delta_time
-        frame = self.time * 10
-        self.fidx = int(frame) % 10
+        frame = self.time * 10 * self.framespeed
+        self.leg_fidx = int(frame) % 10
+        self.body_fidx = int(frame) % 10
+    # 움직임
+    def moving(self):
+        self.x = self.x + self.dx
 
-    def updateDelta(self, ddx, ddy , act):
-        dx,dy = self.delta
-        dx += ddx
-        dy += ddy
-        if ddx != 0 or act != 0:
-            self.updateAction(dx, ddx , act)
-        self.delta = dx, dy
+    # 점프
+    def tryjump(self):
+        self.jump()
 
-    def updateAction(self, dx, ddx, act):
-        if dx < 0 : # 왼쪽 걷기
-            self.leg_action = 0
-            self.body_action = 2
-            self.ocha = 6
-            if act > 0:
-                self.fidx = (self.fidx + 1) % 10
-                self.body_action = 0
-                self.ocha = 0
-
-
-        elif dx > 0: # 오른쪽 걷기
-            self.leg_action = 1
-            self.body_action = 3
-            self.ocha = -5
-            if act > 0:
-                self.fidx = (self.fidx + 1) % 10
-                self.body_action = 1
-                self.ocha = 0
-
-        elif ddx > 0:  # 왼쪽 기본 ( 바라보기 )
-            self.leg_action = 2
-
-        elif ddx < 0:  # 오른쪽 기본 ( 바라보기 )
-            self.leg_action = 3
-
-        if act > 0:
-            if self.leg_action == 2:
-                self.body_action = 0
-            elif self.leg_action == 3:
-                self.body_action = 1
-        else:
-            if self.leg_action == 2:
-                self.body_action = 2
-            elif self.leg_action == 3:
-                self.body_action = 3
-
+    def jump(self):
+        pass
 
     def fire(self):
         pass
 
     def handle_event(self, e):
-        pair = (e.type, e.key)
-        if pair in Player.KEY_MAP:
-            self.updateDelta(*Player.KEY_MAP[pair])
+        if e.type == SDL_KEYDOWN:
+            if e.key == SDLK_LEFT:
+                self.dx -= 2
+                self.body_action = Player.BODY_LEFT_IDLE_ACTION
+                self.leg_action = Player.LEG_LEFT_WALK_ACTION
+                self.ocha = 10
+            if e.key == SDLK_RIGHT:
+                self.dx += 2
+                self.body_action = Player.BODY_RIGHT_IDLE_ACTION
+                self.leg_action = Player.LEG_RIGHT_WALK_ACTION
+                self.ocha = 0
+
+            if e.key == SDLK_s:
+
+        if e.type == SDL_KEYUP:
+            if e.key == SDLK_LEFT:
+                self.dx += 2
+                self.leg_action = Player.LEG_LEFT_IDLE_ACTION
+            if e.key == SDLK_RIGHT:
+                self.dx -= 2
+                self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
+
+
+
+
+
+
