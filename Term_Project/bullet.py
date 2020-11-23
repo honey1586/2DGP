@@ -18,11 +18,11 @@ class Bullet:
 
     def update(self):
         if self.dir == 1 or self.dir == 3:
-            x += 10
+            self.x += 10
         elif self.dir == 0 or self.dir == 2:
-            x -= 10
+            self.x -= 10
 
-        self.x = x
+        x = self.x
 
         if x < -20 or x > get_canvas_width() + 20:
             Bullet.bullets.remove(self)

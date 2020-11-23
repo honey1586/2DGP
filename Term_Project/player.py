@@ -123,6 +123,8 @@ class Player:
 
             if e.key == SDLK_RIGHT:
                 self.dx += 1
+            if e.key == SDLK_UP:
+                pass
             if e.key == SDLK_a:
                 self.temp = self.body_action
                 self.tryfire()
