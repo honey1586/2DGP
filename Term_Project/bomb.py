@@ -14,7 +14,6 @@ class Bomb:
         if self.dir == 2:
             self.bomb_image.clip_draw(0, 0, 150, 150, self.x + 30, self.y + 8, 350, 350)
         elif self.dir == 1:
-        elif self.dir == 3:
             self.bombR_image.clip_draw(0, 0, 150, 150, self.x - 30, self.y + 8, 350, 350)
 
     def update(self):
