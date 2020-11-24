@@ -83,16 +83,26 @@ class Player:
         if self.isJump == True:
             if self.y <= 213:
                 self.leg_action = Player.LEG_JUMP_ACTION
+                if self.dir == 3:
+                    self.leg_action = Player.LEG_JUMP_ACTION
                 self.y += 4
             if self.y > 213:
                 self.isJump = False
+                if self.dir == 2:
+                    self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
+                if self.dir == 1:
+                    self.leg_action = Player.LEG_LEFT_IDLE_ACTION
+                if self.dir == 3:
+                    if self.tmp == 2:
+                        self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
+                    if self.tmp == 1:
+                        self.leg_action = Player.LEG_LEFT_IDLE_ACTION
+
+
 
         if self.isJump == False and self.y > 125:
             self.y -= 4
-            if self.dir == 2:
-                self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
-            if self.dir == 1:
-                self.leg_action = Player.LEG_LEFT_IDLE_ACTION
+
 
         px += self.dx
 
@@ -111,6 +121,7 @@ class Player:
                 self.bxocha = -5
                 self.byocha = 25
                 self.body_fidx = 0
+
             elif self.dir == 3 and self.tmp == 1:
                 self.bxocha = 5
                 self.byocha = 25
@@ -120,9 +131,12 @@ class Player:
             self.leg_fidx = int(frame) % 10
         if self.isJump == True:
             if self.dir == 2:
-                self.leg_fidx =0
+                self.leg_fidx = 0
             if self.dir == 1:
-                self.leg_fidx =1
+                self.leg_fidx = 1
+
+
+
 
 
 
