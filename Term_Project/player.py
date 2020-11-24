@@ -1,6 +1,7 @@
 from pico2d import *
 import gfw
 from bullet import Bullet
+from bomb import Bomb
 
 px = 0
 
@@ -136,11 +137,6 @@ class Player:
                 self.leg_fidx = 1
 
 
-
-
-
-
-
     # 움직임
     def moving(self):
         self.x = self.x + self.dx
@@ -168,9 +164,11 @@ class Player:
 
             self.body_action = Player.BODY_UP_SHOOT_ACTION
 
-
-
         self.fire(self.dir)
+
+    def bomb(self,dir):
+        bomb = Bomb(self.x,self.y,dir)
+        Bomb.bombs.append(bomb)
 
     def handle_event(self, e):
         if e.type == SDL_KEYDOWN:
@@ -190,6 +188,9 @@ class Player:
                 self.tryfire()
             if e.key == SDLK_s:
                 self.jump()
+            if e.key == SDLK_d:
+                self.temp = self.body_action
+                self.trybomb()
 
 
         if e.type == SDL_KEYUP:
