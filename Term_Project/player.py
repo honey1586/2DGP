@@ -15,6 +15,7 @@ class Player:
     BODY_RIGHT_SHOOT_ACTION = 2
     BODY_LEFT_SHOOT_ACTION = 1
     BODY_UP_SHOOT_ACTION = 5
+    BODY_BOMB_ACTION = 0
 
     LEG_RIGHT_IDLE_ACTION = 4
     LEG_LEFT_IDLE_ACTION = 3
@@ -39,6 +40,7 @@ class Player:
         self.dir = 0
 
         self.fireaction = False
+        self.bombaction = False
         self.isLeftWalking = False
         self.isRightWalking = False
         self.isJump = False
@@ -71,6 +73,8 @@ class Player:
             self.body_action = Player.BODY_RIGHT_IDLE_ACTION
             if self.fireaction == True:
                 self.body_action = Player.BODY_RIGHT_SHOOT_ACTION
+            if self.bombaction == True:
+                self.body_action = Player.BODY_BOMB_ACTION
             self.leg_action = Player.LEG_RIGHT_WALK_ACTION
             self.lxocha = 0
 
@@ -78,6 +82,8 @@ class Player:
             self.body_action = Player.BODY_LEFT_IDLE_ACTION
             if self.fireaction == True:
                 self.body_action = Player.BODY_LEFT_SHOOT_ACTION
+            if self.bombaction == True:
+                self.body_action = Player.BODY_BOMB_ACTION
             self.leg_action = Player.LEG_LEFT_WALK_ACTION
             self.lxocha = 10
 
@@ -98,8 +104,6 @@ class Player:
                         self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
                     if self.tmp == 1:
                         self.leg_action = Player.LEG_LEFT_IDLE_ACTION
-
-
 
         if self.isJump == False and self.y > 125:
             self.y -= 4
@@ -126,6 +130,12 @@ class Player:
             elif self.dir == 3 and self.tmp == 1:
                 self.bxocha = 5
                 self.byocha = 25
+                self.body_fidx = 1
+
+        if self.bombaction == True:
+            if self.dir == 2:
+                self.body_fidx = 0
+            if self.dir == 1:
                 self.body_fidx = 1
 
         if self.isJump == False:
@@ -170,6 +180,14 @@ class Player:
         bomb = Bomb(self.x,self.y,dir)
         Bomb.bombs.append(bomb)
 
+    def trybomb(self):
+        self.bombaction = True
+
+        if self.dir == 1 or self.dir == 2:
+            self.body_action = Player.BODY_BOMB_ACTION
+
+        self.bomb(self.dir)
+
     def handle_event(self, e):
         if e.type == SDL_KEYDOWN:
             if e.key == SDLK_LEFT:
@@ -204,6 +222,9 @@ class Player:
                 self.dir = self.tmp
             if e.key == SDLK_a:
                 self.fireaction = False
+                self.body_action = self.temp
+            if e.key == SDLK_d:
+                self.bombaction = False
                 self.body_action = self.temp
 
 
