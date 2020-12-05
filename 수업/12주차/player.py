@@ -13,14 +13,14 @@ def init():
     heart_red = gfw.image.load('res/heart_red.png')
     heart_white = gfw.image.load('res/heart_white.png')
 
+    global delta_x,delta_y
+    delta_x ,delta_y =0,0
+
     reset()
 
 def reset():
     global pos
     pos = get_canvas_width() // 2 , get_canvas_height() // 2
-
-    global delta_x,delta_y
-    delta_x ,delta_y =0,0
 
     global life
     life = MAX_LIFE

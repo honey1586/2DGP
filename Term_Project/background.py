@@ -8,7 +8,7 @@ def init():
 
 def draw():
     x, y = get_canvas_width() // 2 + 960, get_canvas_height() // 2
-    bg1.draw(x - player.px * 2 , y)
+    bg1.draw(x , y)
 
 
 def update():

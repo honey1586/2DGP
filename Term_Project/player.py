@@ -4,6 +4,7 @@ from bullet import Bullet
 from bomb import Bomb
 
 px = 0
+x = 0
 
 class Player:
 
@@ -65,9 +66,10 @@ class Player:
         self.body_image.clip_draw(body_sx,body_sy,150,150,self.x+self.bxocha,self.y + self.byocha,350,350)
 
     def update(self):
-        global px
+        global px,x
         self.calframe()
         self.moving()
+
 
         if self.dx > 0:
             self.body_action = Player.BODY_RIGHT_IDLE_ACTION
@@ -108,8 +110,8 @@ class Player:
         if self.isJump == False and self.y > 125:
             self.y -= 4
 
-
         px += self.dx
+        x = self.x
 
     def calframe(self):
         self.time += gfw.delta_time
@@ -150,6 +152,7 @@ class Player:
     # 움직임
     def moving(self):
         self.x = self.x + self.dx
+
 
     def jump(self):
         self.isJump = True
@@ -192,11 +195,11 @@ class Player:
         if e.type == SDL_KEYDOWN:
             if e.key == SDLK_LEFT:
                 self.dir = 1  # 왼쪽
-                self.dx -= 1
+                self.dx -= 3
 
             if e.key == SDLK_RIGHT:
                 self.dir = 2  # 오른쪽
-                self.dx += 1
+                self.dx += 3
 
             if e.key == SDLK_UP:
                 self.tmp = self.dir
@@ -205,7 +208,8 @@ class Player:
                 self.temp = self.body_action
                 self.tryfire()
             if e.key == SDLK_s:
-                self.jump()
+                if self.y <= 125:
+                    self.jump()
             if e.key == SDLK_d:
                 self.temp = self.body_action
                 self.trybomb()
@@ -213,10 +217,10 @@ class Player:
 
         if e.type == SDL_KEYUP:
             if e.key == SDLK_LEFT:
-                self.dx += 1
+                self.dx += 3
                 self.leg_action = Player.LEG_LEFT_IDLE_ACTION
             if e.key == SDLK_RIGHT:
-                self.dx -= 1
+                self.dx -= 3
                 self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
             if e.key == SDLK_UP:
                 self.dir = self.tmp
