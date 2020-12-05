@@ -5,6 +5,7 @@ from bomb import Bomb
 
 px = 0
 x = 0
+isCreate = True
 
 class Player:
 
@@ -26,6 +27,9 @@ class Player:
 
     #constructor
     def __init__(self):
+        global isCreate
+        isCreate = True
+
         self.x,self.y = 50,125
         self.dx,self.dy = 0,0
 
@@ -160,7 +164,8 @@ class Player:
 
     def fire(self , dir):
         bullet = Bullet(self.x,self.y,dir)
-        Bullet.bullets.append(bullet)
+        gfw.world.add(gfw.layer.bullet, bullet)
+        #Bullet.bullets.append(bullet)
 
     def tryfire(self):
         self.fireaction = True
@@ -230,6 +235,11 @@ class Player:
             if e.key == SDLK_d:
                 self.bombaction = False
                 self.body_action = self.temp
+
+
+    def get_bb(self):
+        x,y = self.x,self.y
+        return x - 30, y - 55, x + 20, y + 30
 
 
 

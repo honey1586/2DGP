@@ -4,9 +4,11 @@ import background as bg
 from player import Player
 from bullet import Bullet
 from enemy import Enemy
+import gobj
+import zombiebullet
 
 def enter():
-    gfw.world.init(['bg','enemy','player'])
+    gfw.world.init(['bg','zombiebullet','bullet','enemy','player'])
 
     global player
     player = Player()
@@ -20,18 +22,15 @@ def enter():
     enemy = Enemy()
     gfw.world.add(gfw.layer.enemy,enemy)
 
-
 def update():
     gfw.world.update()
-    for b in Bullet.bullets: b.update()
-
 
 def draw():
     gfw.world.draw()
     for b in Bullet.bullets: b.draw()
+    for zb in zombiebullet.ZombieBullet.bullets: zb.draw()
+    gobj.draw_collision_box()
 
-def checkCollision():
-    pass
 
 def handle_event(e):
     # prev_dx = boy.dx
