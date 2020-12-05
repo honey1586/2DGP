@@ -3,8 +3,9 @@ from pico2d import *
 import game_state
 from time import *
 
+
 def enter():
-    global loading,character1,character2,character3,character4,bg ,idx1,idx2,idx3,idx4 , ch1_image , ch2_image , ch3_image, ch4_image , cursor_image , cursorPos , pick_image , pick , pickX , pickY
+    global loading, character1, character2, character3, character4, bg, idx1, idx2, idx3, idx4, ch1_image, ch2_image, ch3_image, ch4_image, cursor_image, cursorPos, pick_image, pick, pickX, pickY
     idx1 = 1
     idx2 = 0
     idx3 = 0
@@ -29,7 +30,7 @@ def enter():
 
 
 def update():
-    global loading,cursorPos
+    global loading, cursorPos
     if loading == True:
         sleep(1)
         game_state.num = cursorPos + 1
@@ -37,7 +38,7 @@ def update():
 
 
 def draw():
-    global loading ,idx1,idx2,idx3,idx4, cursorPos , pick ,  pickX , pickY
+    global loading, idx1, idx2, idx3, idx4, cursorPos, pick, pickX, pickY
 
     ch1_image.clip_draw((167 * idx1), 0, 166, 320, 121, 246)
     ch2_image.clip_draw((167 * idx2), 0, 166, 320, 301, 246)
@@ -45,7 +46,7 @@ def draw():
     ch4_image.clip_draw((167 * idx4), 0, 166, 320, 658, 246)
 
     if pick == True:
-        if pickY >= 247: #247
+        if pickY >= 247:  # 247
             pickY -= 6
 
         if pickY <= 526:
@@ -56,15 +57,15 @@ def draw():
             loading = True
 
         elif pickY <= 247 and cursorPos == 1:
-            character2.draw(306,215)
+            character2.draw(306, 215)
             loading = True
 
         elif pickY <= 247 and cursorPos == 2:
-            character3.draw(486,215)
+            character3.draw(486, 215)
             loading = True
 
         elif pickY <= 247 and cursorPos == 3:
-            character4.draw(666,215)
+            character4.draw(666, 215)
             loading = True
 
     bg.draw(400, 300)
@@ -91,8 +92,9 @@ def draw():
         idx3 = 0
         idx4 = 1
 
+
 def handle_event(e):
-    global idx1,idx2,idx3,idx4 , cursorPos , pick ,  pickX , pickY , ch_pick
+    global idx1, idx2, idx3, idx4, cursorPos, pick, pickX, pickY, ch_pick
 
     if e.type == SDL_QUIT:
         gfw.quit()
@@ -122,8 +124,10 @@ def handle_event(e):
             pick = True
             pickX = 660
 
+
 def exit():
     pass
+
 
 def pause():
     pass

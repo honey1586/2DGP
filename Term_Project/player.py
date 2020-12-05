@@ -1,14 +1,18 @@
 from pico2d import *
 import gfw
 from bullet import Bullet
+
+
+
+
 from bomb import Bomb
 
 px = 0
 x = 0
 isCreate = True
 
-class Player:
 
+class Player:
     body_image = None
     leg_image = None
 
@@ -21,27 +25,27 @@ class Player:
 
     LEG_RIGHT_IDLE_ACTION = 4
     LEG_LEFT_IDLE_ACTION = 3
-    LEG_RIGHT_WALK_ACTION =2
+    LEG_RIGHT_WALK_ACTION = 2
     LEG_LEFT_WALK_ACTION = 1
     LEG_JUMP_ACTION = 0
 
-    #constructor
+    # constructor
     def __init__(self):
         global isCreate
         isCreate = True
 
-        self.x,self.y = 50,125
-        self.dx,self.dy = 0,0
+        self.x, self.y = 50, 125
+        self.dx, self.dy = 0, 0
 
         self.body_fidx = 0
         self.leg_fidx = 0
         self.lxocha = 0
         self.lyocha = 0
-        self.bxocha= 0
+        self.bxocha = 0
         self.byocha = 0
         self.framespeed = 0
         self.temp = 0
-        self.tmp =0
+        self.tmp = 0
         self.dir = 0
 
         self.fireaction = False
@@ -67,14 +71,12 @@ class Player:
 
         body_sx = self.body_fidx * 150
         body_sy = self.body_action * 150
-        self.body_image.clip_draw(body_sx,body_sy,150,150,self.x+self.bxocha,self.y + self.byocha,350,350)
+        self.body_image.clip_draw(body_sx, body_sy, 150, 150, self.x + self.bxocha, self.y + self.byocha, 350, 350)
 
     def update(self):
-        global px,x
+        global px, x
         self.calframe()
         self.moving()
-
-
         if self.dx > 0:
             self.body_action = Player.BODY_RIGHT_IDLE_ACTION
             if self.fireaction == True:
@@ -152,20 +154,17 @@ class Player:
             if self.dir == 1:
                 self.leg_fidx = 1
 
-
     # 움직임
     def moving(self):
-        self.x = self.x + self.dx
-
-
+        # self.x = self.x + self.dx
+        pass
     def jump(self):
         self.isJump = True
 
-
-    def fire(self , dir):
-        bullet = Bullet(self.x,self.y,dir)
+    def fire(self, dir):
+        bullet = Bullet(self.x, self.y, dir)
         gfw.world.add(gfw.layer.bullet, bullet)
-        #Bullet.bullets.append(bullet)
+        # Bullet.bullets.append(bullet)
 
     def tryfire(self):
         self.fireaction = True
@@ -184,8 +183,8 @@ class Player:
 
         self.fire(self.dir)
 
-    def bomb(self,dir):
-        bomb = Bomb(self.x,self.y,dir)
+    def bomb(self, dir):
+        bomb = Bomb(self.x, self.y, dir)
         Bomb.bombs.append(bomb)
 
     def trybomb(self):
@@ -201,7 +200,6 @@ class Player:
             if e.key == SDLK_LEFT:
                 self.dir = 1  # 왼쪽
                 self.dx -= 3
-
             if e.key == SDLK_RIGHT:
                 self.dir = 2  # 오른쪽
                 self.dx += 3
@@ -219,7 +217,6 @@ class Player:
                 self.temp = self.body_action
                 self.trybomb()
 
-
         if e.type == SDL_KEYUP:
             if e.key == SDLK_LEFT:
                 self.dx += 3
@@ -236,14 +233,6 @@ class Player:
                 self.bombaction = False
                 self.body_action = self.temp
 
-
     def get_bb(self):
-        x,y = self.x,self.y
+        x, y = self.x, self.y
         return x - 30, y - 55, x + 20, y + 30
-
-
-
-
-
-
-

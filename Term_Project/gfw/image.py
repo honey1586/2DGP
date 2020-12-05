@@ -2,6 +2,7 @@ from pico2d import *
 
 images = {}
 
+
 def load(file):
     global images
     if file in images:
@@ -10,6 +11,7 @@ def load(file):
     image = load_image(file)
     images[file] = image
     return image
+
 
 def unload(file):
     global images

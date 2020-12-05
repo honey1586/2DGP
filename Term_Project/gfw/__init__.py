@@ -11,16 +11,18 @@ stack = None
 frame_interval = 0.01
 delta_time = 0
 
+
 def quit():
     global running
     running = False
+
 
 def run(start_state):
     global running, stack
     running = True
     stack = [start_state]
 
-    w,h = 800,600
+    w, h = 800, 600
     if hasattr(start_state, 'canvas_width'): w = start_state.canvas_width
     if hasattr(start_state, 'canvas_height'): h = start_state.canvas_height
 
@@ -57,6 +59,7 @@ def run(start_state):
 
     close_canvas()
 
+
 def change(state):
     global stack
     if (len(stack) > 0):
@@ -64,12 +67,14 @@ def change(state):
     stack.append(state)
     state.enter()
 
+
 def push(state):
     global stack
     if (len(stack) > 0):
         stack[-1].pause()
     stack.append(state)
     state.enter()
+
 
 def pop():
     global stack
@@ -84,6 +89,7 @@ def pop():
 
         # execute resume function of the previous state
         stack[-1].resume()
+
 
 def run_main():
     import sys

@@ -1,29 +1,35 @@
 import gfw
 from pico2d import *
 import background as bg
-from player import Player
+from enemy import Enemy ,CollisonImage
 from bullet import Bullet
-from enemy import Enemy
+import player
 import gobj
 import zombiebullet
+import random
+
 
 def enter():
-    gfw.world.init(['bg','zombiebullet','bullet','enemy','player'])
-
-    global player
-    player = Player()
-    gfw.world.add(gfw.layer.player, player)
+    gfw.world.init(['bg', 'zombiebullet', 'bullet', 'zombie', 'p','obj_dead'])
 
     global bg
     bg.init()
-    gfw.world.add(gfw.layer.bg,bg)
+    gfw.world.add(gfw.layer.bg, bg)
 
-    global enemy
-    enemy = Enemy()
-    gfw.world.add(gfw.layer.enemy,enemy)
+    global p
+    p = player.Player()
+    gfw.world.add(gfw.layer.p, p)
+
+    global zombie , zombies
+    for i in range (0,20):
+        zombie = Enemy(random.randint(500,1900) , 115, random.randint(1,2))
+        gfw.world.add(gfw.layer.zombie, zombie)
+
+    #global obj_dead
 
 def update():
     gfw.world.update()
+
 
 def draw():
     gfw.world.draw()
@@ -40,10 +46,12 @@ def handle_event(e):
         if e.key == SDLK_ESCAPE:
             gfw.pop()
 
-    player.handle_event(e)
+    p.handle_event(e)
+
 
 def exit():
     pass
+
 
 if __name__ == '__main__':
     gfw.run_main()

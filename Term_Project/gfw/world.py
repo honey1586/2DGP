@@ -5,6 +5,7 @@ from pico2d import *
 objects = []
 trashcan = []
 
+
 def init(layer_names):
     global objects
     objects = []
@@ -15,26 +16,33 @@ def init(layer_names):
         gfw.layer.__dict__[name] = layerIndex
         layerIndex += 1
 
+
 def add(layer_index, obj):
     objects[layer_index].append(obj)
 
+
 def remove(obj):
     trashcan.append(obj)
+
 
 def all_objects():
     for layer_objects in objects:
         for obj in layer_objects:
             yield obj
 
+
 def objects_at(layer_index):
     for obj in objects[layer_index]:
         yield obj
 
+
 def count_at(layer_index):
     return len(objects[layer_index])
 
+
 def count():
     return reduce(lambda sum, a: sum + len(a), objects, 0)
+
 
 def clear():
     global objects
@@ -42,10 +50,12 @@ def clear():
         del o
     objects = []
 
+
 def clear_at(layer_index):
     for o in objects[layer_index]:
         del o
     objects[layer_index] = []
+
 
 def update():
     for obj in all_objects():
@@ -55,9 +65,11 @@ def update():
     # counts = list(map(len, objects))
     # print('count:', counts, count())
 
+
 def draw():
     for obj in all_objects():
         obj.draw()
+
 
 def empty_trashcan():
     global trashcan
@@ -71,6 +83,3 @@ def empty_trashcan():
             except ValueError:
                 pass
     trashcan = []
-
-
-
