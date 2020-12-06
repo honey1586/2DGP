@@ -48,6 +48,8 @@ class Player:
         self.tmp = 0
         self.dir = 0
 
+        self.attackDelay = 0
+
         self.fireaction = False
         self.bombaction = False
         self.isLeftWalking = False
@@ -77,6 +79,7 @@ class Player:
         global px, x
         self.calframe()
         self.moving()
+
         if self.dx > 0:
             self.body_action = Player.BODY_RIGHT_IDLE_ACTION
             if self.fireaction == True:
@@ -123,6 +126,9 @@ class Player:
         self.time += gfw.delta_time
         frame = self.time * 10
 
+        self.attackDelay += gfw.delta_time
+
+
         if self.fireaction == False:
             self.byocha = 0
             self.bxocha = 0
@@ -156,8 +162,18 @@ class Player:
 
     # 움직임
     def moving(self):
-        # self.x = self.x + self.dx
-        pass
+        if self.x < 0:
+            self.x = 0
+            return
+        elif self.x > get_canvas_width():
+            self.x = get_canvas_width()
+            return
+        else:
+            self.x = self.x + self.dx
+        if self.x > 770:
+            self.x = 50
+
+
     def jump(self):
         self.isJump = True
 
@@ -199,17 +215,20 @@ class Player:
         if e.type == SDL_KEYDOWN:
             if e.key == SDLK_LEFT:
                 self.dir = 1  # 왼쪽
-                self.dx -= 3
+                self.dx -= 2
+
             if e.key == SDLK_RIGHT:
                 self.dir = 2  # 오른쪽
-                self.dx += 3
+                self.dx += 2
 
             if e.key == SDLK_UP:
                 self.tmp = self.dir
                 self.dir = 3
             if e.key == SDLK_a:
-                self.temp = self.body_action
-                self.tryfire()
+                if self.attackDelay >= 1.0:
+                    self.temp = self.body_action
+                    self.tryfire()
+                    self.attackDelay=0
             if e.key == SDLK_s:
                 if self.y <= 125:
                     self.jump()
@@ -219,10 +238,10 @@ class Player:
 
         if e.type == SDL_KEYUP:
             if e.key == SDLK_LEFT:
-                self.dx += 3
+                self.dx += 2
                 self.leg_action = Player.LEG_LEFT_IDLE_ACTION
             if e.key == SDLK_RIGHT:
-                self.dx -= 3
+                self.dx -= 2
                 self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
             if e.key == SDLK_UP:
                 self.dir = self.tmp

@@ -9,8 +9,14 @@ def init():
 
 def draw():
     global x,y
+
     x, y = get_canvas_width() // 2 + 960 - player.px /2, get_canvas_height() // 2
-    print(x)
+    if x > 1360:
+        x = 1360
+        player.px = 0
+    if x < 1000:
+        x -= 720
+
     bg1.draw(x, y)
 
 def update():

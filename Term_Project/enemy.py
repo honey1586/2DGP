@@ -3,13 +3,11 @@ import gfw
 import player
 from zombiebullet import ZombieBullet
 
-IDLE_STATE = 1
-WALK_STATE = 2
-ATTACK_STATE = 3
+
 DEAD_STATE = 4
 ZOMBIE_COUNT = 20
 
-state = IDLE_STATE
+
 deadMode = False
 isCreate = False
 
@@ -42,7 +40,11 @@ class Enemy:
         self.attackdelay = 0
         self.dd = 0
         self.time = 0
+        self.IDLE_STATE = 1
+        self.WALK_STATE = 2
+        self.ATTACK_STATE = 3
 
+        self.state = self.IDLE_STATE
         global isCreate
         isCreate = True
         Enemy.zombie1_idleimage = gfw.load_image("res/zombie1_idle.png")
@@ -66,19 +68,19 @@ class Enemy:
     def draw(self):
         z1_sx = self.fidx * 150
         if self.sel == 1:
-            if state == IDLE_STATE:
+            if self.state == self.IDLE_STATE:
                 self.zombie1_idleimage.clip_composite_draw(z1_sx, 0, 150, 150, 0, self.dir, self.x - player.px /2, self.y, 350, 350)
-            if state == WALK_STATE:
+            if self.state == self.WALK_STATE:
                 self.zombie1_walkimage.clip_composite_draw(z1_sx, 0, 150, 150, 0, self.dir, self.x - player.px /2, self.y, 350, 350)
-            if state == ATTACK_STATE:
+            if self.state == self.ATTACK_STATE:
                 self.zombie1_attackimage.clip_composite_draw(z1_sx, 0, 150, 150, 0, self.dir, self.x - player.px /2, self.y, 350, 350)
 
         if self.sel == 2:
-            if state == IDLE_STATE:
+            if self.state == self.IDLE_STATE:
                 self.zombie2_idleimage.clip_composite_draw(z1_sx, 0, 150, 150, 0, self.dir, self.x - player.px /2, self.y,350, 350)
-            if state == WALK_STATE:
+            if self.state == self.WALK_STATE:
                 self.zombie2_walkimage.clip_composite_draw(z1_sx, 0, 150, 150, 0, self.dir, self.x - player.px /2, self.y, 350, 350)
-            if state == ATTACK_STATE:
+            if self.state == self.ATTACK_STATE:
                 self.zombie2_attackimage.clip_composite_draw(z1_sx, 0, 150, 150, 0, self.dir, self.x - player.px /2 , self.y, 350, 350)
 
 
@@ -92,21 +94,21 @@ class Enemy:
 
     def calframe(self):
         if self.sel == 1:
-            if state == IDLE_STATE:
+            if self.state == self.IDLE_STATE:
                 self.fidx = 0
                 self.imagesize = self.zombie1_idleimage_size
-            if state == WALK_STATE:
+            if self.state == self.WALK_STATE:
                 self.imagesize = self.zombie1_walkimage_size
-            if state == ATTACK_STATE:
+            if self.state == self.ATTACK_STATE:
                 self.imagesize = self.zombie1_attackimage_size
 
         if self.sel == 2:
-            if state == IDLE_STATE:
+            if self.state == self.IDLE_STATE:
                 self.fidx = 0
                 self.imagesize = self.zombie2_idleimage_size
-            if state == WALK_STATE:
+            if self.state == self.WALK_STATE:
                 self.imagesize = self.zombie2_walkimage_size
-            if state == ATTACK_STATE:
+            if self.state == self.ATTACK_STATE:
                 self.imagesize = self.zombie2_attackimage_size
 
         self.time += gfw.delta_time * 0.5
@@ -129,8 +131,7 @@ class Enemy:
                     self.fidx = 0
 
     def move(self):
-        global state
-        state = WALK_STATE
+        self.state = self.WALK_STATE
         if player.x < self.x:
             self.dir = 'w'
             self.x = self.x - 0.5
@@ -140,20 +141,19 @@ class Enemy:
 
     def checkdistance(self):
         self.dist = math.sqrt((self.x - player.x - player.px /2) ** 2)
-        if self.dist <= 400 and self.attackMode == False:
+        if self.dist <= 1600 and self.attackMode == False:
             self.fidx = 0
             self.traceMode = True
 
-        if self.dist <= 180:
+        if self.dist <= 200:
             self.target = player.x
             self.fidx = 0
             self.traceMode = False
             self.attack()
 
     def attack(self):
-        global state
         self.attackMode = True
-        state = ATTACK_STATE
+        self.state = self.ATTACK_STATE
 
     def fire(self, dir):
         self.time = 0

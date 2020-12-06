@@ -5,12 +5,14 @@ from enemy import Enemy ,CollisonImage
 from bullet import Bullet
 import player
 import gobj
+import boss
 import zombiebullet
 import random
+import bossbullet
 
 
 def enter():
-    gfw.world.init(['bg', 'zombiebullet', 'bullet', 'zombie', 'p','obj_dead'])
+    gfw.world.init(['bg','bossbullet','boss', 'zombiebullet', 'bullet', 'zombie', 'p','obj_dead'])
 
     global bg
     bg.init()
@@ -25,6 +27,10 @@ def enter():
         zombie = Enemy(random.randint(500,1900) , 115, random.randint(1,2))
         gfw.world.add(gfw.layer.zombie, zombie)
 
+    global boss
+    boss = boss.Boss()
+    gfw.world.add(gfw.layer.boss ,boss)
+
     #global obj_dead
 
 def update():
@@ -35,6 +41,7 @@ def draw():
     gfw.world.draw()
     for b in Bullet.bullets: b.draw()
     for zb in zombiebullet.ZombieBullet.bullets: zb.draw()
+    for bb in bossbullet.BossBullet.bullets: bb.draw()
     gobj.draw_collision_box()
 
 
