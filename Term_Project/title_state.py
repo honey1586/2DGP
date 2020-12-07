@@ -8,6 +8,11 @@ def enter():
     image = load_image('res/title.jpg')
 
 
+    global sound
+    sound = load_wav('res/metalslug3.wav')
+    sound.play()
+
+
 def update():
     pass
 
@@ -25,9 +30,8 @@ def handle_event(e):
 
 
 def exit():
-    global image
-    del image
-    print("del image")
+    global image , sound
+    del image , sound
 
 
 def pause():

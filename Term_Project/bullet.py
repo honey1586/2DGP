@@ -3,6 +3,7 @@ import gfw
 import gobj
 import enemy
 import boss
+import menu_state
 
 
 class Bullet:
@@ -55,11 +56,10 @@ class Bullet:
                     gfw.world.remove(self)
                     obj_dead = enemy.CollisonImage(self.enemy.x,self.enemy.y,self.enemy.dir,self.enemy.sel)
                     gfw.world.add(gfw.layer.obj_dead, obj_dead)
-                    if enemy.ZOMBIE_COUNT == 0:
+                    print(len(self.layer))
+                    if len(self.layer) <= 1:
                         enemy.isCreate = False
                         boss.ImmortalMode = False
-                    else :
-                        enemy.ZOMBIE_COUNT -= 1
                     enemy.Enemy.remove(self.enemy)
 
         if boss.isCreate == True:
@@ -71,6 +71,7 @@ class Bullet:
                 if boss.hp == 0:
                     gfw.world.remove(self.boss)
                     boss.isCreate =False
+                    gfw.change(menu_state)
 
     def get_bb(self):
         x, y = self.x, self.y

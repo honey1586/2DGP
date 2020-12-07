@@ -2,12 +2,14 @@ from pico2d import *
 import gfw
 import player
 import gobj
+import game_state
+import menu_state
 
 
 class BossBullet:
     bullets = []
 
-    def __init__(self, x, y):
+    def __init__(self, x , y):
         self.boss_bullet = gfw.load_image('res/bossbullet.png')
         self.x, self.y = x, y- 100
 
@@ -18,7 +20,7 @@ class BossBullet:
         # print('Radius = %d' % self.radius)
 
     def draw(self):
-        self.boss_bullet.clip_composite_draw(0, 0, 150, 150, 0, 'w', self.x, self.y, 350, 350)
+        self.boss_bullet.clip_composite_draw(0, 0, 150, 150, 0, 'w', self.x - player.px / 2, self.y, 350, 350)
 
     def update(self):
         x, y = self.x, self.y
@@ -36,7 +38,8 @@ class BossBullet:
                 gfw.world.remove(self)
                 gfw.world.remove(self.player)
                 player.isCreate = False
+                gfw.change(menu_state)
 
     def get_bb(self):
-        x, y = self.x, self.y
+        x, y = self.x - player.px / 2 , self.y
         return x - 5, y - 5, x + 5, y + 5

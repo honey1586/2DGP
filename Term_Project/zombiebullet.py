@@ -2,6 +2,8 @@ from pico2d import *
 import gfw
 import player
 import gobj
+import game_state
+import menu_state
 
 
 class ZombieBullet:
@@ -48,6 +50,8 @@ class ZombieBullet:
                 gfw.world.remove(self)
                 gfw.world.remove(self.player)
                 player.isCreate = False
+                gfw.change(menu_state)
+
 
     def get_bb(self):
         x, y = self.x, self.y

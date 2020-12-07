@@ -1,10 +1,6 @@
 from pico2d import *
 import gfw
 from bullet import Bullet
-
-
-
-
 from bomb import Bomb
 
 px = 0
@@ -170,8 +166,6 @@ class Player:
             return
         else:
             self.x = self.x + self.dx
-        if self.x > 770:
-            self.x = 50
 
 
     def jump(self):
@@ -215,17 +209,17 @@ class Player:
         if e.type == SDL_KEYDOWN:
             if e.key == SDLK_LEFT:
                 self.dir = 1  # 왼쪽
-                self.dx -= 2
+                self.dx -= 1.5
 
             if e.key == SDLK_RIGHT:
                 self.dir = 2  # 오른쪽
-                self.dx += 2
+                self.dx += 1.5
 
             if e.key == SDLK_UP:
                 self.tmp = self.dir
                 self.dir = 3
             if e.key == SDLK_a:
-                if self.attackDelay >= 1.0:
+                if self.attackDelay >= 0.5:
                     self.temp = self.body_action
                     self.tryfire()
                     self.attackDelay=0
@@ -238,10 +232,10 @@ class Player:
 
         if e.type == SDL_KEYUP:
             if e.key == SDLK_LEFT:
-                self.dx += 2
+                self.dx += 1.5
                 self.leg_action = Player.LEG_LEFT_IDLE_ACTION
             if e.key == SDLK_RIGHT:
-                self.dx -= 2
+                self.dx -= 1.5
                 self.leg_action = Player.LEG_RIGHT_IDLE_ACTION
             if e.key == SDLK_UP:
                 self.dir = self.tmp

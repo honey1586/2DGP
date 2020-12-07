@@ -28,6 +28,12 @@ def enter():
     character3 = load_image('res/Character3.png')
     character4 = load_image('res/Character4.png')
 
+    global bgm
+    bgm = load_music('res/title_state_bgm.mp3')
+    bgm.repeat_play()
+
+    global sound
+    sound = load_wav('res/sellect_fio.wav')
 
 def update():
     global loading, cursorPos
@@ -121,12 +127,14 @@ def handle_event(e):
             pickX = 480
 
         elif cursorPos == 3:
+            sound.play()
             pick = True
             pickX = 660
 
 
 def exit():
-    pass
+    global bgm ,sound
+    del bgm,sound
 
 
 def pause():

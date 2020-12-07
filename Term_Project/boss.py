@@ -86,7 +86,7 @@ class Boss:
 
     def fire(self):
         self.time = 0
-        bossbullet = BossBullet(self.x - player.px / 2, self.y + 35)
+        bossbullet = BossBullet(self.x, self.y + 35)
         gfw.world.add(gfw.layer.bossbullet, bossbullet)
 
         if player.x == self.x:
