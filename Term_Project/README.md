@@ -115,3 +115,11 @@
 > | 6주차 (11.16 ~ 11.23) |      맵 구현 및 횡스크롤 구현      |
 > | 7주차 (11.23 ~ 11.30) |      UI 구현 및 각 State 연결      |
 > | 8주차 (11.30 ~ 12.7)  |             버그 수정              |
+
+발표 링크 
+
+1차발표 : https://www.youtube.com/watch?v=Y7Oz3d0tRso
+
+중간발표 : https://www.youtube.com/watch?v=b_VjYXE-l-4
+
+최종발표 : https://www.youtube.com/watch?v=YDBeEak9twA
